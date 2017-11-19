@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="product")
+ * @ORM\HasLifecycleCallbacks
  */
 class Product
 {
@@ -24,14 +25,19 @@ class Product
   private $name;
 
   /**
-   * @ORM\Column(type="text")
+   * @ORM\Column(type="text", nullable=true)
    */
   private $description;
 
   /**
-   * @ORM\Column(type="string", name="main_image")
+   * @ORM\Column(type="string", name="main_image", nullable=true)
    */
   private $mainImage;
+
+  /**
+   * @ORM\Column(type="datetime", name="created_at")
+   */
+  private $createdAt;
 
   /**
    * Many Products have many tags
