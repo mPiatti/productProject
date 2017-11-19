@@ -40,7 +40,8 @@ class Product
     private $createdAt;
 
     /**
-     * Many products can have many tags
+     * Many products can have many tags.
+     *
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
      * @ORM\JoinTable(name="products_tags",
      *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="product_id")},
@@ -49,12 +50,73 @@ class Product
      */
     private $tags;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->tags = new ArrayCollection();
     }
 
     /**
-     * Set the created at value: trigger on insert
+     * Name setter
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Name getter
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Description setter
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Description getter
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Main image setter
+     *
+     * @param string $mainImage
+     */
+    public function setMainImage($mainImage)
+    {
+        $this->mainImage = $mainImage;
+    }
+
+    /**
+     * Main image getter
+     *
+     * @return string
+     */
+    public function getMainImage()
+    {
+        return $this->mainImage;
+    }
+
+    /**
+     * Set the created at value: trigger on insert.
      *
      * @ORM\PrePersist
      */
