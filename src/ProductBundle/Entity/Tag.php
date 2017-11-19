@@ -24,7 +24,7 @@ class Tag
   private $name;
 
   /**
-   * Many Tags have many products
+   * Many tags can have many products
    * @ORM\ManyToMany(targetEntity="Product", mappedBy="tags")
    */
   private $products;
