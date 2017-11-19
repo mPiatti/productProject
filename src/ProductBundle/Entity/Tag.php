@@ -3,6 +3,7 @@
 namespace ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -21,4 +22,14 @@ class Tag
    * @ORM\Column(type="string")
    */
   private $name;
+
+  /**
+   * Many Tags have many products
+   * @ORM\ManyToMany(targetEntity="Product", mappedBy="tags")
+   */
+  private $products;
+
+  public function __construct() {
+    $this->products = new ArrayCollection();
+  }
 }
