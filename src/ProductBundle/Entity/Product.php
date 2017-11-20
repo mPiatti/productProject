@@ -10,7 +10,7 @@ use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ProductBundle\Repository\ProductRepository")
  * @ORM\Table(name="product")
  * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
@@ -152,6 +152,11 @@ class Product
     public function getImage()
     {
         return $this->image;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 
     /**
