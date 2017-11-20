@@ -12,10 +12,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 class ProductType extends AbstractType
 {
     /**
-     * Build product create/edit form
-     *
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,7 +25,7 @@ class ProductType extends AbstractType
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
