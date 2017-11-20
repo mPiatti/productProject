@@ -11,8 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class ProductController extends Controller
 {
     /**
-     * @Route("/product/create", name="product_create")
-     */
+    * @Route("/product/create", name="product_create")
+    */
     public function createAction(Request $request)
     {
         $product = new Product();
@@ -38,16 +38,22 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/product/list", name="product_list")
-     */
+    * @Route("/product/list", name="product_list")
+    */
     public function listAction()
     {
-        //TODO
+        $products = $this->getDoctrine()
+            ->getRepository(Product::class)
+            ->findAllOrderedByDate();
+
+        return $this->render('ProductBundle:Product:list.html.twig', array(
+            'products' => $products
+        ));
     }
 
     /**
-     * @Route("/product/{product_id}/edit", name="product_edit")
-     */
+    * @Route("/product/{product_id}/edit", name="product_edit")
+    */
     public function editAction($product_id)
     {
         //TODO
