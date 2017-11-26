@@ -3,16 +3,19 @@
 namespace ProductBundle\Controller;
 
 use ProductBundle\Entity\Product;
-use ProductBundle\Form\ProductType;
+use ProductBundle\Form\Type\ProductType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+/**
+ * @Route("/product")
+ */
 class ProductController extends Controller
 {
     /**
-    * @Route("/product/create", name="product_create")
-    */
+     * @Route("/create", name="product_create")
+     */
     public function createAction(Request $request)
     {
         $product = new Product();
@@ -20,42 +23,50 @@ class ProductController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($product);
-                $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($product);
+            $em->flush();
 
-                return $this->redirectToRoute('product_create');
-            } catch(\Doctrine\DBAL\DBALException $e) {
-                return $this->redirectToRoute('product_create');
-            }
-
+            return $this->redirectToRoute('product_create');
         }
 
-        return $this->render('ProductBundle:Product:create.html.twig', array(
-            'form' => $form->createView()
+        return $this->render('@Product/Product/create.html.twig', array(
+            'productForm' => $form->createView()
         ));
     }
 
     /**
-    * @Route("/product/list", name="product_list")
-    */
+     * @Route("/{id}/edit", name="product_edit")
+     */
+    public function editAction(Request $request, Product $product)
+    {
+        $form = $this->createForm(ProductType::class, $product);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($product);
+            $em->flush();
+
+            return $this->redirectToRoute('product_list');
+        }
+
+        return $this->render('@Product/Product/edit.html.twig', array(
+            'productForm' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/list", name="product_list")
+     */
     public function listAction()
     {
         $products = $this->getDoctrine()
             ->getRepository(Product::class)
             ->findAllOrderedByDate();
 
-        return $this->render('ProductBundle:Product:list.html.twig', array(
+        return $this->render('@Product/Product/list.html.twig', array(
             'products' => $products
         ));
-    }
-
-    /**
-    * @Route("/product/{product_id}/edit", name="product_edit")
-    */
-    public function editAction($product_id)
-    {
-        //TODO
     }
 }
