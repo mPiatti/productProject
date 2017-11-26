@@ -3,6 +3,7 @@
 namespace ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ProductBundle\Entity\Product;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -12,11 +13,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Tag
 {
     /**
-     * @ORM\Column(type="integer", name="tag_id")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $tagId;
+    private $id;
 
     /**
      * @ORM\Column(type="string")
@@ -24,8 +25,6 @@ class Tag
     private $name;
 
     /**
-     * Many tags can have many products.
-     *
      * @ORM\ManyToMany(targetEntity="Product", mappedBy="tags")
      */
     private $products;
@@ -36,8 +35,14 @@ class Tag
     }
 
     /**
-     * Tag name setter
-     *
+     * @param \ProductBundle\Entity\Product $product
+     */
+    public function addProduct(Product $product)
+    {
+        $this->articles[] = $product;
+    }
+
+    /**
      * @param string $name
      */
     public function setName($name)
@@ -46,8 +51,6 @@ class Tag
     }
 
     /**
-     * Tag name getter
-     *
      * @return string
      */
     public function getName()
