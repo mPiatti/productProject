@@ -3,31 +3,27 @@
 namespace ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ProductBundle\Entity\Tag;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Vich\UploaderBundle\Entity\File as EmbeddedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="ProductBundle\Repository\ProductRepository")
  * @ORM\Table(name="product")
  * @ORM\HasLifecycleCallbacks
- * @Vich\Uploadable
  */
 class Product
 {
     /**
-     * @ORM\Column(type="integer", name="product_id")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @var int
      */
-    private $productId;
+    private $id;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      *
      * @var string
      */
@@ -41,41 +37,16 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @var string
-     */
-    private $image;
-
-    /**
-     * @Vich\UploadableField(mapping="product_image", fileNameProperty="image")
-     *
-     * @var File
-     */
-    private $imageFile;
-
-    /**
      * @ORM\Column(type="datetime", name="created_at")
      *
-     * @var \DateTime
+     * @var DateTime
      */
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime", name="updated_at")
-     *
-     * @var \DateTime
-     */
-    private $updatedAt;
-
-    /**
-     * Many products can have many tags.
-     *
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
-     * @ORM\JoinTable(name="products_tags",
-     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="product_id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="tag_id")}
-     *      )
+     * @ORM\JoinTable(name="products_tags")
+     * @Assert\Count(min = 1, minMessage = "You must specify at least one tag")
      *
      * @var ArrayCollection
      */
@@ -84,6 +55,15 @@ class Product
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+    }
+
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -119,44 +99,36 @@ class Product
     }
 
     /**
-     * @param File $image
+     * @return DateTime
      */
-    public function setImageFile(File $image = null)
-    {
-        $this->imageFile = $image;
-
-        if ($image) {
-            $this->updatedAt = new \DateTime('now');
-        }
-    }
-
-    /**
-     * @return File
-     */
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
-
-    /**
-     * @param string $image
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
-    }
-
-    /**
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @param Tag $tag
+     */
+    public function addTag(Tag $tag)
+    {
+        $tag->addProduct($this);
+        $this->tags[] = $tag;
+    }
+
+    /**
+     * @param ArrayCollection $tags
+     */
+    public function setTags(ArrayCollection $tags)
+    {
+        $this->tags = $tags;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 
     /**
@@ -164,14 +136,6 @@ class Product
      */
     public function onPrePersist()
     {
-        $this->updatedAt = $this->createdAt = new \DateTime('now');
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function onPreUpdate()
-    {
-        $this->updatedAt = new \DateTime('now');
+        $this->createdAt = new \DateTime('now');
     }
 }
