@@ -1,3 +1,15 @@
-{% for product in products %}
-  {{ product.name }}
-{% endfor %}
+{% extends '@Product/Default/index.html.twig' %}
+
+{% block body %}
+<div class="container">
+
+    {% for product in products %}
+        <div class="row">
+            <div class="col-sm-3">{{ product.name }}</div>
+            <div class="col-sm-3">{{ product.createdAt | date('d-m-Y H:m:s') }}</div>
+            <div class="col-sm-3"><a href="{{ path('product_edit', {'id': product.id}) }}">Edit Product</a></div>
+        </div>
+    {% endfor %}
+
+</div>
+{% endblock %}
