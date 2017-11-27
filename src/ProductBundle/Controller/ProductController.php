@@ -4,6 +4,7 @@ namespace ProductBundle\Controller;
 
 use ProductBundle\Entity\Product;
 use ProductBundle\Form\Type\ProductType;
+use ProductBundle\Form\Type\ProductListType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -59,13 +60,24 @@ class ProductController extends Controller
     /**
      * @Route("/list", name="product_list")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $products = $this->getDoctrine()
-            ->getRepository(Product::class)
-            ->findAllOrderedByDate();
+        $form = $this->createForm(ProductListType::class);
+        $form->handleRequest($request);
+
+        if (is_null($form->getData()['tags'])) {
+            $products = $this->getDoctrine()
+                ->getRepository(Product::class)
+                ->findAllOrderedByDate();
+        } else {
+            //filter by tag
+            $products = $this->getDoctrine()
+                ->getRepository(Product::class)
+                ->filterByTagsName($form->getData()['tags']);
+        }
 
         return $this->render('@Product/Product/list.html.twig', array(
+            'listForm' => $form->createView(),
             'products' => $products
         ));
     }

@@ -2,7 +2,17 @@
 
 {% block body %}
 <div class="container">
-
+    {{ form_start(listForm) }}
+        <div class="form-group">
+            {{ form_row(listForm.tags, { 'attr': {'data-role': 'tagsinput'} }) }}
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+        <div class="form-group">
+            <a href="{{ path('product_list') }}" class="btn btn-primary">Reset</a>
+        </div>
+    {{ form_end(listForm) }}
     {% for product in products %}
         <div class="row">
             <div class="col-sm-3">{{ product.name }}</div>
