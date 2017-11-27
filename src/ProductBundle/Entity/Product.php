@@ -6,11 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use ProductBundle\Entity\Tag;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Entity\File as EmbeddedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="ProductBundle\Repository\ProductRepository")
  * @ORM\Table(name="product")
  * @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable
  */
 class Product
 {
@@ -37,6 +40,20 @@ class Product
     private $description;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="product_image", fileNameProperty="image")
+     *
+     * @var File
+     */
+    private $imageFile;
+
+    /**
      * @ORM\Column(type="datetime", name="created_at")
      *
      * @var DateTime
@@ -56,7 +73,6 @@ class Product
     {
         $this->tags = new ArrayCollection();
     }
-
 
     /**
      * @return integer
@@ -96,6 +112,38 @@ class Product
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param File $image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 
     /**
