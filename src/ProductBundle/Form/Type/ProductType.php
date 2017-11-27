@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
@@ -26,9 +27,14 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, ['required' => false, 'label' => 'Product Name'])
-            ->add('description', TextareaType::class, ['label' => 'Product Description', 'required' => false])
-            ->add('tags', TextType::class, ['required' => false, 'label' => 'Tags'])
+            ->add('name', TextType::class, [])
+            ->add('description', TextareaType::class, ['required' => false])
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => false,
+                'download_uri' => false,
+            ])
+            ->add('tags', TextType::class, ['required' => false])
         ;
 
         $builder->get('tags')
