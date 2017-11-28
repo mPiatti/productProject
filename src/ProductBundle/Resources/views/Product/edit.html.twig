@@ -1,20 +1,10 @@
-{% extends '@Product/Default/index.html.twig' %}
+{% extends '@Product/Product/formLayout.html.twig' %}
+
+{% block title %}Edit product: {{ product.name }}{% endblock %}
 
 {% block body %}
 <div class="container">
-    {{ form_start(productForm) }}
-        <div class="form-group">
-            {{ form_row(productForm.name, { 'attr': {'class': 'form-control'} }) }}
-        </div>
-        <div class="form-group">
-            {{ form_row(productForm.description, { 'attr': {'class': 'form-control'} }) }}
-        </div>
-        <div class="form-group">
-            {{ form_row(productForm.tags, { 'attr': {'data-role': 'tagsinput'} }) }}
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save Product</button>
-        </div>
-    {{ form_end(productForm) }}
+    <h1>Edit product: {{ product.name }}</h1>
+    {{ include('@Product/Product/_form.html.twig') }}
 </div>
 {% endblock %}

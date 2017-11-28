@@ -1,4 +1,11 @@
 var $ = require('jquery');
 
-require('bootstrap-sass');
-require('bootstrap-tagsinput');
+import 'bootstrap';
+import 'bootstrap-tagsinput';
+
+// bootstrap-tagsinput
+$('input[data-role="tagsinput"]').tagsinput({
+    confirmKeys: [13, 32],
+});
+
+// formvalidation.io

@@ -18,7 +18,11 @@ Encore
     // allow legacy applications to use $/jQuery as a global variable
     .autoProvidejQuery()
 
-    .enableSourceMaps(!Encore.isProduction())
+    .enablePostCssLoader((options) => {
+        options.config = {
+            path: './postcss.config.js'
+        };
+    })
 
     // empty the outputPath dir before each build
     .cleanupOutputBeforeBuild()

@@ -8,6 +8,7 @@ use ProductBundle\Form\Type\ProductListType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/product")
@@ -53,6 +54,7 @@ class ProductController extends Controller
         }
 
         return $this->render('@Product/Product/edit.html.twig', array(
+            'product' => $product,
             'productForm' => $form->createView()
         ));
     }
@@ -65,15 +67,14 @@ class ProductController extends Controller
         $form = $this->createForm(ProductListType::class);
         $form->handleRequest($request);
 
-        if (is_null($form->getData()['tags'])) {
-            $products = $this->getDoctrine()
-                ->getRepository(Product::class)
-                ->findAllOrderedByDate();
-        } else {
-            //filter by tag
+        if ($form->isSubmitted() && $form->isValid()) {
             $products = $this->getDoctrine()
                 ->getRepository(Product::class)
                 ->filterByTagsName($form->getData()['tags']);
+        } else {
+            $products = $this->getDoctrine()
+                ->getRepository(Product::class)
+                ->findAllOrderedByDate();
         }
 
         return $this->render('@Product/Product/list.html.twig', array(

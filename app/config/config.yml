@@ -82,3 +82,16 @@ vich_uploader:
             inject_on_load: false
             delete_on_update: true
             delete_on_remove: true
+
+# LiipImagine Configuration
+liip_imagine:
+    resolvers:
+        default:
+            web_path: ~
+    filter_sets:
+        my_thumb:
+            cache: ~
+            quality: 75
+            filters:
+                relative_resize:
+                    widen: 150

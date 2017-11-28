@@ -27,11 +27,10 @@ class ProductRepository extends EntityRepository
             ->innerJoin('p.tags', 't');
 
         foreach ($tagNames as $key => $name) {
-            $query->where("t.name LIKE :{$key}");
+            $query->andWhere("t.name LIKE :{$key}");
         }
 
         $query->orderBy('p.createdAt', 'DESC');
-
         $query->setParameters($tagNames);
 
         return $query->getQuery()->getResult();

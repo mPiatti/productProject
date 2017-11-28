@@ -5,6 +5,8 @@ namespace ProductBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ProductBundle\Entity\Tag;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
