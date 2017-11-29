@@ -11,7 +11,6 @@ $('input[data-role="tagsinput"]').tagsinput({
 });
 
 // formvalidation.io
-
 $(document).ready(function () {
     $('#productForm')
         .find('[name="product[name]"]')
@@ -36,7 +35,7 @@ $(document).ready(function () {
                 'product[name]': {
                     validators: {
                         notEmpty: {
-                            message: 'The name field is required'
+                            message: 'Name is a required field.'
                         }
                     }
                 },
