@@ -34,7 +34,7 @@
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
-/web/images/
+/web/images/products/
 /web/media/
 /node_modules/
 
