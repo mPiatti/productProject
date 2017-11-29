@@ -2026,6 +2026,10 @@ form-data@~2.3.1:
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
 
+formvalidation@^0.6.2-dev:
+  version "0.6.2-dev"
+  resolved "https://registry.yarnpkg.com/formvalidation/-/formvalidation-0.6.2-dev.tgz#4547e02fc7e3a56f09c04c50853a7b1c4a89a48e"
+
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
