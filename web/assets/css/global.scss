@@ -7,8 +7,12 @@
         width: 100%;
     }
 
-    &.has-error {
-
+    .form-inline & {
+        vertical-align: top;
+        .bootstrap-tagsinput {
+            width: auto;
+            min-width: 300px;
+        }
     }
 }
 
