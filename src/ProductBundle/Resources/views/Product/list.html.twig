@@ -1,4 +1,4 @@
-{% extends '@Product/Product/formLayout.html.twig' %}
+{% extends '@Product/Product/layout.html.twig' %}
 
 {% block title %}Product list{% endblock %}
 
@@ -22,8 +22,10 @@
                     {{ form_widget(listForm.tags, { 'attr': {'class': 'form-control', 'data-role': 'tagsinput'} }) }}
                 </div>
                 <div class="form-group">
-                <button type="submit" class="btn btn-primary">Search</button>
-                <a href="{{ path('product_list') }}" class="btn btn-primary">Reset</a>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    {% if resetEnabled %}
+                        <a href="{{ path('product_list') }}" class="btn btn-primary">Reset</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
