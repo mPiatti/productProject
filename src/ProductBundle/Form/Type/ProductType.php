@@ -27,7 +27,7 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [])
+            ->add('name', TextType::class, ['required' => false])
             ->add('description', TextareaType::class, ['required' => false])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,

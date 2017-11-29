@@ -21,17 +21,27 @@ class ProductController extends Controller
     public function createAction(Request $request)
     {
         $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductType::class, $request);
 
         $form->handleRequest($request);
+/*
+        $validator = $this->get('validator');
+        $errors = $validator->validate($product);
+        if (count($errors) > 0) {
+            $this->addFlash('danger', (string)$errors);
+        }
+*/
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
 
+            $this->addFlash('success', 'Your changes were saved!');
             return $this->redirectToRoute('product_create');
-        }
 
+        }
+        
         return $this->render('@Product/Product/create.html.twig', array(
             'productForm' => $form->createView()
         ));

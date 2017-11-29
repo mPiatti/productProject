@@ -2,7 +2,6 @@
   "devDependencies": {
     "@symfony/webpack-encore": "^0.17.0",
     "autoprefixer": "^7.1.6",
-    "bootstrap": "4.0.0-beta.2",
     "bootstrap-sass": "^3.3.7",
     "bootstrap-tagsinput": "^0.7.1",
     "formvalidation": "^0.6.2-dev",

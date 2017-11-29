@@ -1,6 +1,6 @@
 var $ = require('jquery');
 
-import 'bootstrap';
+import 'bootstrap-sass';
 import 'bootstrap-tagsinput';
 import 'formvalidation';
 import 'formvalidation/dist/js/framework/bootstrap';
@@ -11,22 +11,30 @@ $('input[data-role="tagsinput"]').tagsinput({
 });
 
 // formvalidation.io
+/*
 $(document).ready(function () {
     $('#productForm')
         .find('[name="product[name]"]')
             .change(function (e) {
-                $('#productForm').formValidation('revalidateField', 'name');
+                $('#productForm').formValidation('revalidateField', 'product[name]');
             })
             .end()
         .formValidation({
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
             fields: {
-                name: {
+                'product[name]': {
                     validators: {
                         notEmpty: {
-                            message: 'required field'
+                            message: 'The name is required'
                         }
                     }
                 }
             }
         });
 });
+*/
