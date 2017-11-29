@@ -5,42 +5,58 @@
 {% block body %}
 <div class="container">
     <h1>Product list</h1>
-    {{ form_start(listForm) }}
-    <div class="row search-list-form">
-        <div class="col-10">
-            <div class="col-auto">
-                {{ form_label(listForm.tags, 'Filter by Tags', { 'label_attr': {'class': 'control-label'} }) }}
-                {{ form_widget(listForm.tags, { 'attr': {'class': 'form-control', 'data-role': 'tagsinput'} }) }}
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
             </div>
-            <div class="col-auto">
+        {% endfor %}
+    {% endfor %}
+
+    {{ form_start(listForm, {'attr': {'novalidate': 'novalidate', 'id': 'searchForm', 'class': 'form-inline'} }) }}
+        <div class="row search-list-form">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    {{ form_label(listForm.tags, 'Filter by Tags', { 'label_attr': {'class': 'control-label'} }) }}
+                    {{ form_widget(listForm.tags, { 'attr': {'class': 'form-control', 'data-role': 'tagsinput'} }) }}
+                </div>
+                <div class="form-group">
                 <button type="submit" class="btn btn-primary">Search</button>
-            </div>
-            <div class="col-auto">
                 <a href="{{ path('product_list') }}" class="btn btn-primary">Reset</a>
+                </div>
             </div>
         </div>
-    </div>
     {{ form_end(listForm) }}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Product Image</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Product Creation Date</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-    {% for product in products %}
-        <tr>
-            <td><a href="{{ path('product_edit', {'id': product.id}) }}"><img src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('my_thumb') }}"></a></td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.createdAt | date('d-m-Y H:m:s') }}</td>
-            <td><a href="{{ path('product_edit', {'id': product.id}) }}">Edit Product</a></td>
-        </tr>
-    {% endfor %}
-        </tbody>
-    </table>
+
+    {% if products %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Product Image</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Product Creation Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        {% if product.image %}
+                        <td><a href="{{ path('product_edit', {'id': product.id}) }}"><img src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('my_thumb') }}" alt="{{ product.name }}" title="{{ product.name }}"></a></td>
+                        {% else %}
+                        <td><a href="{{ path('product_edit', {'id': product.id}) }}"><img src="{{ asset('images/placeholder.jpg') | imagine_filter('my_thumb')  }}"></a></td>
+                        {% endif %}
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.createdAt | date('d-m-Y H:m:s') }}</td>
+                        <td><a href="{{ path('product_edit', {'id': product.id}) }}">Edit Product</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="lead">No products found.</p>
+    {% endif %}
 
 </div>
 {% endblock %}
