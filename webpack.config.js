@@ -17,6 +17,7 @@ Encore
 
     // allow legacy applications to use $/jQuery as a global variable
     .autoProvidejQuery()
+    .autoProvideVariables({ Popper: ['popper.js', 'default'] })
 
     .enablePostCssLoader((options) => {
         options.config = {
@@ -26,9 +27,6 @@ Encore
 
     // empty the outputPath dir before each build
     .cleanupOutputBeforeBuild()
-
-    // show OS notifications when builds finish/fail
-    //.enableBuildNotifications()
 
     // create hashed filenames (e.g. app.abc123.css)
     // .enableVersioning()
