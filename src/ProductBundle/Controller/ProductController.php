@@ -67,6 +67,7 @@ class ProductController extends Controller
      */
     public function listAction(Request $request)
     {
+        $resetEnabled = false;
         $form = $this->createForm(ProductListType::class);
         $form->handleRequest($request);
 
@@ -74,6 +75,7 @@ class ProductController extends Controller
             $products = $this->getDoctrine()
                 ->getRepository(Product::class)
                 ->filterByTagsName($form->getData()['tags']);
+            $resetEnabled = true;
         } else {
             $products = $this->getDoctrine()
                 ->getRepository(Product::class)
@@ -81,6 +83,7 @@ class ProductController extends Controller
         }
 
         return $this->render('@Product/Product/list.html.twig', array(
+            'resetEnabled' => $resetEnabled,
             'listForm' => $form->createView(),
             'products' => $products
         ));

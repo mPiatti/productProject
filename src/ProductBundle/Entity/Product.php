@@ -28,7 +28,7 @@ class Product
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Name is a required field.")
      *
      * @var string
      */
@@ -65,7 +65,7 @@ class Product
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
      * @ORM\JoinTable(name="products_tags")
-     * @Assert\Count(min = 1, minMessage = "You must specify at least one tag")
+     * @Assert\Count(min = 1, minMessage = "Please enter at least one tag.")
      *
      * @var ArrayCollection
      */
