@@ -34,7 +34,7 @@ class ProductType extends AbstractType
                 'allow_delete' => false,
                 'download_uri' => false,
             ])
-            ->add('tags', TextType::class, [])
+            ->add('tags', TextType::class, ['required' => false])
         ;
 
         $builder->get('tags')
