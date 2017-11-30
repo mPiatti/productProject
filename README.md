@@ -26,6 +26,7 @@ Progettino Symfony "ProductBundle"
 
 - Sempre nella cartella `productProject` lanciare i seguenti comandi per creare il database e le tabelle ad esso associate:
 
-## Requisiti
+    - `php bin/console doctrine:databse:create`, se l'utente configurato in `app/config/parameters.yml` ha i permessi di creazione del database.
+    - `php bin/console doctrine:schema:create` per creare le tabelle associate alle entità del Bundle.
 
-## Sviluppo
+- L'applicazione può essere lanciata in locale utilizzando il webserver incluso con il comando `php bin/console server:start`.
